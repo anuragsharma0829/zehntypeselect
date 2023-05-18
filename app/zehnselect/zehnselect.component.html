@@ -1,0 +1,157 @@
+<div class="text-center">
+    <h3>***</h3>
+</div>
+
+<div class="container">
+    <table class="table text-center table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Profile</th>
+                <th scope="col">Dropdown</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let u of products">
+            <tr>
+                <th scope="row">{{u.id}}</th>
+                <td>
+
+                    <div ngbDropdown class="d-inline-block" [id]="'dropdown-container-' + u.id" id="dropdown-container" (click)="stopPropagation($event)">
+                       
+                        
+                        <button  class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" ngbDropdownToggle (click)="toggleDropdown(+u.id)">
+                            <span style="margin-left: 10px;">
+                              {{ getSelectedItemsCount() > 0 ? getSelectedItemsCount() + ' templates selected' : 'No templates selected' }}
+                            </span>
+                          </button>
+                          
+
+
+                        <div class="dropdown">
+                            <div class="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                                ngbDropdownMenu>
+                                <div class="row">
+                                  
+                                        <input type="text" class="" id="myInput" (keyup)="myFunction()" placeholder="Search for names.." title="Type in a name">
+                                        <div class="zehnline"><hr></div>
+                                    <div class="col-md-5 mt-2">
+                                        <ul>
+                                            <li  class="cat" *ngFor="let category of category; let i = index"
+                                              [class.selected]="selectedCategory === category" (click)="selectedCategory = category">
+                                              {{ category.categoryName }}
+                                              <span class="caret" [class.active]="selectedCategory === category"></span>
+                                              ({{ selectedItemsCount[i] || 0 }}/{{ category.items.length }})
+                                            </li>
+                                          </ul>
+                                          
+                                    </div>
+
+                                    <div class="col-md-1 h333">
+                                        <div class="vl"></div>
+                                    </div>
+
+                                    
+
+                                    <div class="col-md-5 list mt-2">
+                                        <div class="noItemsMessage" *ngIf="selectedCategory?.items.length == 0">No items Available</div>
+                                            <ul class="ulelement" id="myUL" *ngIf="selectedCategory?.items.length> 0">
+                                           
+                                           
+                                            <li id="it" class="lelementt">
+                                                <span>
+                                                    <input type="checkbox"
+                                                    id="sll"
+                                                        [(ngModel)]="selectAll"
+                                                        (change)="selectAllItems()">
+                                                    Select All
+                                                </span>
+                                            </li>
+
+                                           
+                                              <!-- <li class="lelement" *ngFor="let item of selectedCategory?.items">
+                                                <span>
+                                                  <input type="checkbox" [(ngModel)]="item.checked" [checked]="item.status === 'checked'" (change)="onItemChecked()">
+                                                  <span class="item-name" [ngClass]="{ 'long-item-name': item.itemName.length > 10 }" [title]="item.itemName">{{ item.itemName }}</span>
+                                                </span>
+                                              </li> -->
+                                              <li class="lelement" *ngFor="let item of selectedCategory?.items">
+                                                <span>
+                                                  <input type="checkbox" [(ngModel)]="item.checked" [checked]="item.status === 'checked'" (change)="onItemChecked()">
+                                                  <span class="item-name" [ngClass]="{ 'long-item-name': item.itemName.length > 20 }" [title]="item.itemName">
+                                                    {{ item.itemName.length > 20 ? item.itemName.substr(0, 32) + '...' : item.itemName }}
+                                                  </span>
+                                                </span>
+                                              </li>
+                                              
+                                              
+                                              
+                                              <li id="noItemsMessage" style="display:none;">No matching items found.</li>
+                                         </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 zehnline"><hr></div>
+
+                                <!-- buttons -->
+                                <div class="col-md-12 button-container">
+                                    <button id="btn1" type="button"(click)="resetDropdown()"  class="left-button">Cancel</button>
+                                    <button id="btn2" type="button" (click)="resetDropdown()" class="right-button">Reset selection</button>
+                                    <button id="btn3" type="button" class="right-button">Apply {{ getSelectedItemsCount() }} </button>
+                                </div>      
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button id="rndrd" routerLink="/demo">Randerd</button>
