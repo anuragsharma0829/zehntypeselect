@@ -76,7 +76,26 @@ export class ZehnselectComponent {
         { itemId: 42, itemName: 'Blackberry', status: 'unchecked' },
       ],
     },
+
+    // {
+    //   id: 2,
+    //   categoryName: 'Trains',
+    //   items: [
+    //     {
+    //       itemId: 909,
+    //       itemName: 'VandeBharat Reeva-Bhopal 12ZSKTS56',
+    //       status: 'checked',
+    //     },
+    //     {
+    //       itemId: 809,
+    //       itemName: 'Tejas Superfast 12ZSKTS56',
+    //       status: 'unchecked',
+    //     },
+        
+    //   ],
+    // },
   ];
+  
 
   selectedCategory: any = this.category[0];
   selectedItemsCounts: { categoryName: string; count: number }[] = [];
@@ -114,16 +133,16 @@ export class ZehnselectComponent {
     };
   }
 
-  myFunction() {
+  myFunction(dropdownId: number) {
     const input: HTMLInputElement = document.getElementById(
-      'myInput'
+      'myInput-' + dropdownId
     ) as HTMLInputElement;
     const filter: string = input.value.toUpperCase();
     const ul: HTMLUListElement = document.getElementById(
-      'myUL'
+      'myUL-' + dropdownId
     ) as HTMLUListElement;
     const noItems: HTMLElement = document.getElementById(
-      'noItemsMessage'
+      'noItemsMessage-' + dropdownId
     ) as HTMLElement;
 
     if (ul === null) {
@@ -164,7 +183,7 @@ export class ZehnselectComponent {
   }
 
   selectAll = false;
-  // selectAll: boolean = false;
+
 
   selectedItemsCount: number[] = [];
 
@@ -179,6 +198,7 @@ export class ZehnselectComponent {
     return count;
   }
 
+  
   selectAllItems() {
     for (let item of this.selectedCategory.items) {
       item.checked = this.selectAll;
@@ -215,13 +235,6 @@ export class ZehnselectComponent {
     ).length;
   }
 
-  // reset() {
-  //   for (let item of this.selectedCategory.items) {
-  //     item.checked = item.status === 'checked'; // Reset the checked property to its initial value
-  //   }
-  //   this.updateSelectedItemsCount();
-  // }
-
   cnaselDropdown(): void {
     if (this.dropdown) {
       this.dropdown.close();
@@ -232,6 +245,8 @@ export class ZehnselectComponent {
       }
     }
   }
+
+  previousSelection: number = 0;
 
   resetDropdown(): void {
     for (let item of this.selectedCategory.items) {
@@ -248,6 +263,7 @@ export class ZehnselectComponent {
 
     this.updateSelectedItemsCount();
     this.dropdown.close();
+    this.selectAll = false;
   }
 
   activeDropdown: number | null = null;
@@ -258,22 +274,34 @@ export class ZehnselectComponent {
     if (!clickedElement.closest('.dropdown-container')) {
       this.resetDropdown();
     }
-    this.selectAll = false;
+    // this.selectAll = false;
   }
 
   activeDropdownId: number | null = null;
 
+  // toggleDropdown(dropdownId: number): void {
+  //   if (this.activeDropdownId !== dropdownId) {
+  //     const previousDropdownContainer = document.getElementById(
+  //       'dropdown-container-' + this.activeDropdownId
+  //     ) as HTMLElement;
+  //     if (previousDropdownContainer) {
+  //       this.resetDropdown();
+  //     }
+  //   }
+  //   this.activeDropdownId =
+  //     this.activeDropdownId === dropdownId ? null : dropdownId;
+  // }
+
   toggleDropdown(dropdownId: number): void {
     if (this.activeDropdownId !== dropdownId) {
-      const previousDropdownContainer = document.getElementById(
-        'dropdown-container-' + this.activeDropdownId
-      ) as HTMLElement;
+      const previousDropdownContainer = document.getElementById('dropdown-container-' + this.activeDropdownId) as HTMLElement;
       if (previousDropdownContainer) {
         this.resetDropdown();
       }
+    } else {
+      this.resetDropdown();
     }
-    this.activeDropdownId =
-      this.activeDropdownId === dropdownId ? null : dropdownId;
+    this.activeDropdownId = this.activeDropdownId === dropdownId ? null : dropdownId;
   }
 
   isDropdownOpen(dropdownId: number): boolean {
